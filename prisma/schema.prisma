@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Puzzle {
+  id        String      @id
+  name      String
+  slug      String
+  rank      Int
+  sets      Set[]
+  Case      Case[]
+  Algorithm Algorithm[]
+}
+
+model Set {
+  id       String @id @default(cuid())
+  name     String
+  puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
+  puzzleId String
+  cases    Case[]
+
+  @@index([puzzleId])
+}
+
+model Case {
+  id         String      @id @default(cuid())
+  name       String
+  puzzle     Puzzle      @relation(fields: [puzzleId], references: [id])
+  puzzleId   String
+  sets       Set[]
+  algorithms Algorithm[]
+
+  @@index([puzzleId])
+}
+
+model Algorithm {
+  id       String @id @default(cuid())
+  moves    String
+  puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
+  puzzleId String
+  cases    Case[]
+}
