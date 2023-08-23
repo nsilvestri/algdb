@@ -1,8 +1,9 @@
-import { Card, CardProps } from "../../../components/Card/Card";
-import { CardList } from "../../../components/CardList/CardList";
+import Link from "next/link";
 
 import { PageProps } from "@/.next/types/app/page";
-import prisma from "@/prisma/global-prisma-client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardList } from "@/components/CardList/CardList";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
 const sets = [
   {
@@ -14,16 +15,23 @@ const sets = [
 export default async function PuzzlePage({ params }: PageProps) {
   return (
     <>
-      {params.puzzleSlug}
+      <Breadcrumbs />
       <CardList>
         {sets.map((set) => {
           return (
-            <Card
+            <Link
               key={set.slug}
-              title={set.name}
-              icon={null}
               href={`/puzzles/${params.puzzleSlug}/sets/${set.slug}`}
-            />
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>{set.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-48 w-48"></div>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </CardList>

@@ -1,6 +1,4 @@
-"use client";
-import { usePathname } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 export default function Page() {
-  const pathname = usePathname();
-  return <div>Pathname: {pathname}</div>;
+  return <Breadcrumbs />;
 }

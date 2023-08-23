@@ -1,9 +1,30 @@
 import Link from "next/link";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
+import { ThemeToggle } from "../ThemeToggle/theme-toggle";
 
-export function Header() {
+export async function Header() {
   return (
-    <Link href="/">
-      <div className="bg-gray-800 p-3">Header</div>
-    </Link>
+    <header className="flex justify-between content-center p-3">
+      <Link href="/">
+        <p>AlgDB</p>
+      </Link>
+      <div className="flex gap-2">
+        <ThemeToggle />
+
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton />
+          <SignUpButton />
+        </SignedOut>
+      </div>
+    </header>
   );
 }
