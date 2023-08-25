@@ -1,11 +1,4 @@
 import Link from "next/link";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
 import { ThemeToggle } from "../ThemeToggle/theme-toggle";
 
 export async function Header() {
@@ -16,14 +9,6 @@ export async function Header() {
       </Link>
       <div className="flex gap-2">
         <ThemeToggle />
-
-        <SignedIn>
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
-        <SignedOut>
-          <SignInButton />
-          <SignUpButton />
-        </SignedOut>
       </div>
     </header>
   );

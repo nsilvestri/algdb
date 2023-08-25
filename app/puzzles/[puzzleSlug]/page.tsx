@@ -4,15 +4,10 @@ import { PageProps } from "@/.next/types/app/page";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardList } from "@/components/CardList/CardList";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-
-const sets = [
-  {
-    name: "OLL",
-    slug: "oll",
-  },
-];
+import prisma from "@/prisma/global-prisma-client";
 
 export default async function PuzzlePage({ params }: PageProps) {
+  const sets = await prisma.set.findMany();
   return (
     <>
       <Breadcrumbs />

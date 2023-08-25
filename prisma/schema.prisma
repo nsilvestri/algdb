@@ -24,6 +24,7 @@ model Puzzle {
 model Set {
   id       String @id @default(cuid())
   name     String
+  slug     String
   puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
   puzzleId String
   cases    Case[]
@@ -48,4 +49,6 @@ model Algorithm {
   puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
   puzzleId String
   cases    Case[]
+
+  @@index([puzzleId])
 }

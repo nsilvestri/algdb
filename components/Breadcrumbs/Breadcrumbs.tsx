@@ -7,7 +7,8 @@ export default function Breadcrumbs() {
   const paths = pathname.split("/").slice(1);
   return (
     <div className="flex space-x-1">
-      {paths.map((path) => {
+      {paths.map((path, i) => {
+        const isLast = i === paths.length - 1;
         return (
           <>
             <p>/</p>
@@ -18,7 +19,7 @@ export default function Breadcrumbs() {
                   : pathname.slice(0, pathname.indexOf(path) + path.length)
               }
             >
-              {path}
+              <p className={`${isLast ? "font-bold" : ""}`}>{path}</p>
             </Link>
           </>
         );
