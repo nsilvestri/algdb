@@ -1,17 +1,32 @@
 import { Prisma } from "@prisma/client";
 
 import { threeByThree } from "./puzzle";
+import { visualization3x3Oll, visualization3x3Pll } from "./visualization";
 
-export const pll3x3: Prisma.SetCreateManyInput = {
+export const pll3x3: Prisma.SetCreateInput = {
   name: "PLL",
   slug: "pll",
-  puzzleId: threeByThree.id,
+  puzzle: {
+    connect: {
+      id: threeByThree.id,
+    },
+  },
+  visualization: {
+    create: visualization3x3Pll,
+  },
 };
 
-export const oll3x3: Prisma.SetCreateManyInput = {
+export const oll3x3: Prisma.SetCreateInput = {
   name: "OLL",
   slug: "oll",
-  puzzleId: threeByThree.id,
+  puzzle: {
+    connect: {
+      id: threeByThree.id,
+    },
+  },
+  visualization: {
+    create: visualization3x3Oll,
+  },
 };
 
-export const sets: Prisma.SetCreateManyInput[] = [pll3x3, oll3x3];
+export const sets: Prisma.SetCreateInput[] = [pll3x3, oll3x3];

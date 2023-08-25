@@ -11,8 +11,9 @@ export default function Breadcrumbs() {
         const isLast = i === paths.length - 1;
         return (
           <>
-            <p>/</p>
+            <p key={i}>/</p>
             <Link
+              key={path}
               href={
                 paths.indexOf(path) === paths.length - 1
                   ? pathname

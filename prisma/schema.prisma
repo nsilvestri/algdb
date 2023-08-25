@@ -12,24 +12,31 @@ datasource db {
 }
 
 model Puzzle {
-  id        String      @id
-  name      String
-  slug      String
-  rank      Int
-  sets      Set[]
-  Case      Case[]
-  Algorithm Algorithm[]
+  id              String        @id
+  name            String
+  slug            String
+  rank            Int
+  visualization   Visualization @relation(fields: [visualizationId], references: [id])
+  visualizationId String
+  sets            Set[]
+  Case            Case[]
+  Algorithm       Algorithm[]
+
+  @@index([visualizationId])
 }
 
 model Set {
-  id       String @id @default(cuid())
-  name     String
-  slug     String
-  puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
-  puzzleId String
-  cases    Case[]
+  id              String        @id @default(cuid())
+  name            String
+  slug            String
+  puzzle          Puzzle        @relation(fields: [puzzleId], references: [id])
+  puzzleId        String
+  visualization   Visualization @relation(fields: [visualizationId], references: [id])
+  visualizationId String
+  cases           Case[]
 
   @@index([puzzleId])
+  @@index([visualizationId])
 }
 
 model Case {
@@ -51,4 +58,12 @@ model Algorithm {
   cases    Case[]
 
   @@index([puzzleId])
+}
+
+model Visualization {
+  id      String   @id @default(cuid())
+  type    String
+  options Json
+  Puzzle  Puzzle[]
+  Set     Set[]
 }

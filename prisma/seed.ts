@@ -4,12 +4,15 @@ import { sets } from "./seed-data/set";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.puzzle.createMany({
-    data: puzzles,
+  const puzzlePromises = puzzles.map(async (puzzle) => {
+    await prisma.puzzle.create({ data: puzzle });
   });
-  await prisma.set.createMany({
-    data: sets,
+  await Promise.all(puzzlePromises);
+
+  const setPromises = sets.map(async (set) => {
+    await prisma.set.create({ data: set });
   });
+  await Promise.all(setPromises);
 }
 
 main()

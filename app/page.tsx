@@ -2,9 +2,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardList } from "../components/CardList/CardList";
 import prisma from "@/prisma/global-prisma-client";
 import Link from "next/link";
+import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
+import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
+import { PNGVisualizerOptions } from "sr-puzzlegen";
 
 export default async function Home() {
-  const puzzles = await prisma.puzzle.findMany();
+  const puzzles = await prisma.puzzle.findMany({
+    include: {
+      visualization: true,
+    },
+  });
 
   return (
     <CardList>
@@ -16,7 +23,14 @@ export default async function Home() {
                 <CardTitle>{puzzle.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-48 w-48"></div>
+                <div className="h-48 w-48">
+                  <PuzzleGen
+                    type={puzzle.visualization.type as VisualizerType}
+                    options={
+                      puzzle.visualization.options as PNGVisualizerOptions
+                    }
+                  />
+                </div>
               </CardContent>
             </Card>
           </Link>
