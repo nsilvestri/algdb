@@ -5,13 +5,16 @@ import Link from "next/link";
 import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
-import { SetSelector } from "@/components/SetSelector/SetSelector";
 import { PuzzleSelector } from "@/components/PuzzleSelector/PuzzleSelector";
 
-export default async function Home() {
+export default async function Page() {
   const puzzles = await prisma.puzzle.findMany({
     include: {
-      visualization: true,
+      sets: {
+        include: {
+          visualization: true,
+        },
+      },
     },
   });
 
@@ -19,8 +22,6 @@ export default async function Home() {
     <div className="flex flex-col gap-y-2">
       <p className="font-bold text-xl">Puzzles</p>
       <PuzzleSelector />
-      <p className="font-bold text-xl">Popular Sets</p>
-      <SetSelector />
     </div>
   );
 }

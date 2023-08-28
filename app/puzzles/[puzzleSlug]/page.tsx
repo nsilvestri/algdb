@@ -24,6 +24,7 @@ export default async function PuzzlePage({ params }: PageProps) {
   return (
     <>
       <Breadcrumbs />
+
       <CardList>
         {sets.map((set) => {
           return (

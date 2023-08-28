@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 
 export const visualization3x3: Prisma.VisualizationCreateManyInput = {
-  id: "cllr1mhft000008jn5qtl0pu4",
   type: "cube",
   options: {
     puzzle: {
@@ -11,11 +10,11 @@ export const visualization3x3: Prisma.VisualizationCreateManyInput = {
 };
 
 export const visualization3x3Pll: Prisma.VisualizationCreateManyInput = {
-  id: "cllr1mwh8000108jn18l6bqts",
-  type: "cube",
+  type: "cube-top",
   options: {
     puzzle: {
       size: 3,
+      alg: "R2 u' R U' R U R' u R2 y R U' R'",
       mask: {
         F: [3, 4, 5, 6, 7, 8],
         B: [3, 4, 5, 6, 7, 8],
@@ -28,11 +27,11 @@ export const visualization3x3Pll: Prisma.VisualizationCreateManyInput = {
 };
 
 export const visualization3x3Oll: Prisma.VisualizationCreateManyInput = {
-  id: "cllr1n3bm000208jn82iwduah",
-  type: "cube",
+  type: "cube-top",
   options: {
     puzzle: {
       size: 3,
+      alg: "r U r' R U R' U' r U' r'",
       mask: {
         R: [0, 1, 2, 3, 4, 5, 6, 7, 8],
         F: [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -45,7 +44,6 @@ export const visualization3x3Oll: Prisma.VisualizationCreateManyInput = {
 };
 
 export const visualization4x4: Prisma.VisualizationCreateManyInput = {
-  id: "cllr1n8xk000308jn9hvjd61n",
   type: "cube",
   options: {
     puzzle: {
@@ -55,11 +53,20 @@ export const visualization4x4: Prisma.VisualizationCreateManyInput = {
 };
 
 export const visualization2x2: Prisma.VisualizationCreateManyInput = {
-  id: "cllr1nj3b000508jncg9505lx",
   type: "cube",
   options: {
     puzzle: {
       size: 2,
+    },
+  },
+};
+
+export const visualization2x2Pbl: Prisma.VisualizationCreateManyInput = {
+  type: "cube",
+  options: {
+    puzzle: {
+      size: 2,
+      alg: "R U' R F2 R' U R'",
     },
   },
 };
@@ -70,4 +77,5 @@ export const visualizations: Prisma.VisualizationCreateManyInput[] = [
   visualization3x3Pll,
   visualization4x4,
   visualization2x2,
+  visualization2x2Pbl,
 ];
