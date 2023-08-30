@@ -42,6 +42,7 @@ model Set {
 model Case {
   id         String      @id @default(cuid())
   name       String
+  setup      String
   puzzle     Puzzle      @relation(fields: [puzzleId], references: [id])
   puzzleId   String
   sets       Set[]

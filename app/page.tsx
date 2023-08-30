@@ -9,17 +9,11 @@ import { SetSelector } from "@/components/SetSelector/SetSelector";
 import { PuzzleSelector } from "@/components/PuzzleSelector/PuzzleSelector";
 
 export default async function Home() {
-  const puzzles = await prisma.puzzle.findMany({
-    include: {
-      visualization: true,
-    },
-  });
-
   return (
     <div className="flex flex-col gap-y-2">
-      <p className="font-bold text-xl">Puzzles</p>
+      <h2 className="font-bold text-xl">Puzzles</h2>
       <PuzzleSelector />
-      <p className="font-bold text-xl">Popular Sets</p>
+      <h2 className="font-bold text-xl">Popular Sets</h2>
       <SetSelector />
     </div>
   );

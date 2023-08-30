@@ -3,14 +3,17 @@ import Link from "next/link";
 import { PageProps } from "@/.next/types/app/page";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardList } from "@/components/CardList/CardList";
-import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import prisma from "@/prisma/global-prisma-client";
 import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
-import { visualization2x2 } from "@/prisma/seed-data/visualization";
 
 export default async function PuzzlePage({ params }: PageProps) {
+  const puzzle = await prisma.puzzle.findFirst({
+    where: {
+      slug: params.puzzleSlug,
+    },
+  });
   const sets = await prisma.set.findMany({
     where: {
       puzzle: {
@@ -23,7 +26,7 @@ export default async function PuzzlePage({ params }: PageProps) {
   });
   return (
     <>
-      <Breadcrumbs />
+      <h2 className="font-bold text-xl">{puzzle?.name}</h2>
 
       <CardList>
         {sets.map((set) => {
@@ -53,4 +56,12 @@ export default async function PuzzlePage({ params }: PageProps) {
       </CardList>
     </>
   );
+}
+
+export async function generateStaticParams() {
+  const puzzles = await prisma.puzzle.findMany();
+
+  return puzzles.map((puzzle) => ({
+    slug: puzzle.slug,
+  }));
 }

@@ -10,7 +10,7 @@ export async function Header() {
     <header className="flex justify-between content-center p-3 bg-slate-300 dark:bg-slate-900">
       <div className="flex gap-2">
         <Link href="/">
-          <p className="font-bold text-4xl">AlgDB</p>
+          <h1 className="font-bold text-4xl">AlgDB</h1>
         </Link>
         <Navigation puzzles={puzzles} />
       </div>

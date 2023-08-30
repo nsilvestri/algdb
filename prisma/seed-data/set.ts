@@ -6,6 +6,7 @@ import {
   visualization3x3Oll,
   visualization3x3Pll,
 } from "./visualization";
+import { pbl2x2Cases } from "./case";
 
 export const pll3x3: Prisma.SetCreateInput = {
   name: "PLL",
@@ -43,6 +44,9 @@ export const pbl2x2: Prisma.SetCreateInput = {
   },
   visualization: {
     create: visualization2x2Pbl,
+  },
+  cases: {
+    create: pbl2x2Cases,
   },
 };
 
