@@ -20,7 +20,6 @@ model Puzzle {
   visualizationId String
   sets            Set[]
   Case            Case[]
-  Algorithm       Algorithm[]
 
   @@index([visualizationId])
 }
@@ -52,13 +51,9 @@ model Case {
 }
 
 model Algorithm {
-  id       String @id @default(cuid())
-  moves    String
-  puzzle   Puzzle @relation(fields: [puzzleId], references: [id])
-  puzzleId String
-  cases    Case[]
-
-  @@index([puzzleId])
+  id    String @id @default(cuid())
+  moves String
+  cases Case[]
 }
 
 model Visualization {

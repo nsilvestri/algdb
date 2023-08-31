@@ -1,14 +1,20 @@
 import Link from "next/link";
 
-import { PageProps } from "@/.next/types/app/page";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardList } from "@/components/CardList/CardList";
 import prisma from "@/prisma/global-prisma-client";
 import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
-export default async function PuzzlePage({ params }: PageProps) {
+export default async function Page({
+  params,
+}: {
+  params: {
+    puzzleSlug: string;
+  };
+}) {
   const puzzle = await prisma.puzzle.findFirst({
     where: {
       slug: params.puzzleSlug,
@@ -25,9 +31,9 @@ export default async function PuzzlePage({ params }: PageProps) {
     },
   });
   return (
-    <>
+    <div className="flex flex-col gap-y-2">
+      <Breadcrumbs />
       <h2 className="font-bold text-xl">{puzzle?.name}</h2>
-
       <CardList>
         {sets.map((set) => {
           return (
@@ -40,7 +46,7 @@ export default async function PuzzlePage({ params }: PageProps) {
                   <CardTitle>{set.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-48 w-48">
+                  <div className="h-32 w-32">
                     <PuzzleGen
                       type={set.visualization.type as VisualizerType}
                       options={
@@ -54,7 +60,7 @@ export default async function PuzzlePage({ params }: PageProps) {
           );
         })}
       </CardList>
-    </>
+    </div>
   );
 }
 

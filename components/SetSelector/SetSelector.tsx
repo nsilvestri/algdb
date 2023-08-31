@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PuzzleGen from "../PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
+import { twMerge } from "tailwind-merge";
 
 export async function SetSelector() {
   const sets = await prisma.set.findMany({
