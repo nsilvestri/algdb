@@ -53,13 +53,13 @@ export default async function Page({
                 <Separator orientation="vertical" />
                 <div className="flex flex-col gap-y-1 flex-grow">
                   {c.algorithms.map((a, i) => {
+                    const isLast = i === c.algorithms.length - 1;
                     return (
                       <>
                         <div>
                           <p>{a.moves}</p>
                         </div>
-                        {i !== c.algorithms.length - 1 && <hr />}{" "}
-                        {/* Add Separator element */}
+                        {!isLast && <Separator />}
                       </>
                     );
                   })}
