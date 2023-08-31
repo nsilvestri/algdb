@@ -25,7 +25,7 @@ const PuzzleGen: React.FC<PuzzleProps> = ({ type, options }) => {
         puzzleContainerRef.current.innerHTML = "";
       }
     };
-  }, [type, options, puzzleContainerRef]);
+  }, [type, options, puzzleContainerRef.current]);
 
   return <div id="puzzle" ref={puzzleContainerRef}></div>;
 };

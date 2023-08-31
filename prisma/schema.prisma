@@ -73,8 +73,8 @@ model Method {
   name            String
   slug            String
   sets            Set[]
-  puzzle          Puzzle?       @relation(fields: [puzzleId], references: [id])
-  puzzleId        String?
+  puzzle          Puzzle        @relation(fields: [puzzleId], references: [id])
+  puzzleId        String
   visualization   Visualization @relation(fields: [visualizationId], references: [id])
   visualizationId String
 

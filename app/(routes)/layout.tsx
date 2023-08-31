@@ -6,11 +6,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex flex-col gap-y-2">
-      <Breadcrumbs />
-      <Separator />
-      {children}
-    </div>
-  );
+  return <div className="flex flex-col gap-y-2">{children}</div>;
 }
