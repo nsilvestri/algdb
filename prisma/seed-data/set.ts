@@ -35,6 +35,7 @@ export const oll3x3: Prisma.SetCreateInput = {
 };
 
 export const pbl2x2: Prisma.SetCreateInput = {
+  id: "cllyliite000008lbd2wt371e",
   name: "PBL",
   slug: "pbl",
   puzzle: {

@@ -28,10 +28,10 @@ export default async function Page({
   });
   return (
     <div className="flex flex-col gap-y-2">
-      <h2 className="font-bold text-xl">{set?.name}</h2>
+      <h2 className="font-bold text-2xl">{set?.name}</h2>
       {set?.cases.map((c) => {
         return (
-          <Card>
+          <Card key={c.id}>
             <CardHeader>
               <CardTitle>{c.name}</CardTitle>
             </CardHeader>
@@ -71,4 +71,12 @@ export default async function Page({
       })}
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const sets = await prisma.set.findMany();
+
+  return sets.map((set) => ({
+    slug: set.slug,
+  }));
 }

@@ -71,6 +71,16 @@ export const visualization2x2Pbl: Prisma.VisualizationCreateManyInput = {
   },
 };
 
+export const visualization2x2Ortega: Prisma.VisualizationCreateManyInput = {
+  type: "cube",
+  options: {
+    puzzle: {
+      size: 2,
+      alg: "D2 U R U' R F2 R' U R'",
+    },
+  },
+};
+
 export const visualizations: Prisma.VisualizationCreateManyInput[] = [
   visualization3x3,
   visualization3x3Oll,
@@ -78,4 +88,5 @@ export const visualizations: Prisma.VisualizationCreateManyInput[] = [
   visualization4x4,
   visualization2x2,
   visualization2x2Pbl,
+  visualization2x2Ortega,
 ];

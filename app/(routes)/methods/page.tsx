@@ -5,12 +5,11 @@ import Link from "next/link";
 import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
-import { SetSelector } from "@/components/SetSelector/SetSelector";
 
 export default async function Page() {
   const puzzles = await prisma.puzzle.findMany({
     include: {
-      sets: {
+      methods: {
         include: {
           visualization: true,
         },
@@ -20,28 +19,29 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <p className="font-bold text-2xl">Sets</p>
+      <p className="font-bold text-2xl">Methods</p>
       {puzzles.map((puzzle) => {
         return (
           <>
             <p className="font-bold text-lg">{puzzle.name}</p>
             <CardList>
-              {puzzle.sets.map((set) => {
+              {puzzle.methods.map((method) => {
                 return (
                   <Link
-                    key={set.slug}
-                    href={`/puzzles/${puzzle.slug}/sets/${set.slug}`}
+                    key={method.slug}
+                    href={`/puzzles/${puzzle.slug}/methods/${method.slug}`}
                   >
                     <Card>
                       <CardHeader>
-                        <CardTitle>{set.name}</CardTitle>
+                        <CardTitle>{method.name}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="h-32 w-32">
                           <PuzzleGen
-                            type={set.visualization.type as VisualizerType}
+                            type={method.visualization.type as VisualizerType}
                             options={
-                              set.visualization.options as PNGVisualizerOptions
+                              method.visualization
+                                .options as PNGVisualizerOptions
                             }
                           />
                         </div>

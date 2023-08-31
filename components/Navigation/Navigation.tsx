@@ -27,7 +27,9 @@ export function Navigation({ puzzles, sets }: NavigationProps) {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Puzzles</NavigationMenuTrigger>
+          <Link href="/puzzles" legacyBehavior passHref>
+            <NavigationMenuTrigger>Puzzles</NavigationMenuTrigger>
+          </Link>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               {puzzles.map((puzzle) => (
@@ -44,6 +46,13 @@ export function Navigation({ puzzles, sets }: NavigationProps) {
           <Link href="/sets" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Algorithm Sets
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/methods" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Methods
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

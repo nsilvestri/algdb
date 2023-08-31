@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col gap-y-2">
-      <p className="font-bold text-xl">Puzzles</p>
+      <p className="font-bold text-2xl">Puzzles</p>
       <PuzzleSelector />
     </div>
   );

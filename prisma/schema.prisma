@@ -19,7 +19,8 @@ model Puzzle {
   visualization   Visualization @relation(fields: [visualizationId], references: [id])
   visualizationId String
   sets            Set[]
-  Case            Case[]
+  cases           Case[]
+  methods         Method[]
 
   @@index([visualizationId])
 }
@@ -33,6 +34,8 @@ model Set {
   visualization   Visualization @relation(fields: [visualizationId], references: [id])
   visualizationId String
   cases           Case[]
+  methods         Method[]
+  methodId        String?
 
   @@index([puzzleId])
   @@index([visualizationId])
@@ -62,4 +65,19 @@ model Visualization {
   options Json
   Puzzle  Puzzle[]
   Set     Set[]
+  Method  Method[]
+}
+
+model Method {
+  id              String        @id @default(cuid())
+  name            String
+  slug            String
+  sets            Set[]
+  puzzle          Puzzle?       @relation(fields: [puzzleId], references: [id])
+  puzzleId        String?
+  visualization   Visualization @relation(fields: [visualizationId], references: [id])
+  visualizationId String
+
+  @@index([puzzleId])
+  @@index([visualizationId])
 }
