@@ -28,8 +28,6 @@ export default async function Page({
   });
   return (
     <div className="flex flex-col gap-y-2">
-      <Breadcrumbs />
-      <Separator />
       <h2 className="font-bold text-xl">{set?.name}</h2>
       {set?.cases.map((c) => {
         return (

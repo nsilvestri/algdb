@@ -32,7 +32,6 @@ export default async function Page({
   });
   return (
     <div className="flex flex-col gap-y-2">
-      <Breadcrumbs />
       <h2 className="font-bold text-xl">{puzzle?.name}</h2>
       <CardList>
         {sets.map((set) => {
