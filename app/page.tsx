@@ -10,7 +10,7 @@ import { PuzzleSelector } from "@/components/PuzzleSelector/PuzzleSelector";
 
 export default async function Home() {
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-2 h-full">
       <h2 className="font-bold text-2xl">Puzzles</h2>
       <PuzzleSelector />
       <h2 className="font-bold text-2xl">Popular Sets</h2>
