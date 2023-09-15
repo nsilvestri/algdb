@@ -58,11 +58,3 @@ export default async function Page({
     </div>
   );
 }
-
-export async function generateStaticParams() {
-  const methods = await prisma.method.findMany();
-
-  return methods.map((method) => ({
-    slug: method.slug,
-  }));
-}

@@ -100,11 +100,3 @@ export default async function Page({
     </div>
   );
 }
-
-export async function generateStaticParams() {
-  const puzzles = await prisma.puzzle.findMany();
-
-  return puzzles.map((puzzle) => ({
-    slug: puzzle.slug,
-  }));
-}
