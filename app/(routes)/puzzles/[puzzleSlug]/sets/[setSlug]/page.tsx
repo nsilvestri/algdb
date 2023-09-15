@@ -72,11 +72,3 @@ export default async function Page({
     </div>
   );
 }
-
-export async function generateStaticParams() {
-  const sets = await prisma.set.findMany();
-
-  return sets.map((set) => ({
-    slug: set.slug,
-  }));
-}
