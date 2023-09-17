@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, TokenSet } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/prisma/global-prisma-client";
@@ -18,7 +18,39 @@ export const authOptions: NextAuthOptions = {
           scope: "public",
         },
       },
-      token: "https://www.worldcubeassociation.org/oauth/token",
+      token: {
+        async request({ params, provider }) {
+          const res = await fetch(
+            "https://www.worldcubeassociation.org/oauth/token",
+            {
+              method: "POST",
+              headers: {
+                "Cache-Control": "no-cache",
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                grant_type: "authorization_code",
+                code: params.code!,
+                client_id: provider.clientId!,
+                client_secret: provider.clientSecret!,
+                redirect_uri: provider.callbackUrl!,
+              }),
+            }
+          ).then((res) => res.json());
+
+          const tokens: TokenSet = {
+            access_token: res.access_token,
+            expires_at: res.expires_at,
+            refresh_token: res.refresh_token,
+            scope: res.scope,
+            token_type: res.token_type,
+            session_state: res.open_id,
+          };
+          return {
+            tokens,
+          };
+        },
+      },
       userinfo: "https://www.worldcubeassociation.org/api/v0/me",
       profile(profile) {
         return {

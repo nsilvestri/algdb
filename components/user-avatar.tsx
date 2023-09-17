@@ -10,7 +10,7 @@ interface UserAvatarProps extends AvatarProps {
 export function UserAvatar({ user, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>
-      {user.image ? (
+      {user.image && !user.image.includes("missing_avatar_thumb") ? (
         <AvatarImage alt="Picture" src={user.image} />
       ) : (
         <AvatarFallback>
