@@ -1,6 +1,6 @@
 import { NextAuthOptions, TokenSet } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/prisma/global-prisma-client";
 
 export const authOptions: NextAuthOptions = {
@@ -57,6 +57,7 @@ export const authOptions: NextAuthOptions = {
           id: profile.me.id,
           name: profile.me.name,
           image: profile.me.avatar.thumb_url,
+          role: "user",
           // TODO: get WCA ID
         };
       },
@@ -66,8 +67,26 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          image: profile.picture,
+          email: profile.email,
+          role: "user",
+        };
+      },
     }),
   ],
+  session: {
+    strategy: "database",
+  },
+  callbacks: {
+    async session({ session, user }) {
+      session.user.role = user.role;
+      return session;
+    },
+  },
   // pages: {
   //   // TODO: implement custom sign-in page
   //   signIn: "/login",
