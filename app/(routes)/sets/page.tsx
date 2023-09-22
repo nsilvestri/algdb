@@ -5,9 +5,11 @@ import Link from "next/link";
 import PuzzleGen from "@/components/PuzzleGen/PuzzleGen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
-import { SetSelector } from "@/components/SetSelector/SetSelector";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 export default async function Page() {
+  const session = await getServerSession(authOptions);
   const puzzles = await prisma.puzzle.findMany({
     include: {
       sets: {
@@ -21,6 +23,11 @@ export default async function Page() {
   return (
     <div className="flex flex-col gap-y-2">
       <p className="font-bold text-2xl">Sets</p>
+      {session?.user?.role === "admin" && (
+        <Link href="/sets/new" className="underline">
+          Add a new set →
+        </Link>
+      )}
       {puzzles.map((puzzle) => {
         return (
           <>

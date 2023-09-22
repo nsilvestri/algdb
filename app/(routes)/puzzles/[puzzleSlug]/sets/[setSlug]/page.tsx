@@ -15,6 +15,9 @@ export default async function Page({
 }) {
   const set = await prisma.set.findFirst({
     where: {
+      puzzle: {
+        slug: params.puzzleSlug,
+      },
       slug: params.setSlug,
     },
     include: {

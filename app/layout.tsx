@@ -13,6 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -106,11 +107,12 @@ export default async function RootLayout({
                   <aside className="fixed top-16 z-30 hidden h-[calc(100vh-64px)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 md:sticky md:block lg:py-10">
                     <SidebarNav items={sidebarNavItems} />
                   </aside>
-                  <div className="pt-4 h-full">{children}</div>
+                  <div className="py-4 h-full">{children}</div>
                 </div>
               </div>
             </div>
           </ClientSessionProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
