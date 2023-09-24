@@ -103,7 +103,7 @@ export default async function RootLayout({
               </header>
               <div className="container flex-1">
                 <div className="flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[240px_1fr] lg:gap-10">
-                  <aside className="fixed top-14 z-30 hidden h-[calc(100vh-4rem)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 md:sticky md:block lg:py-10">
+                  <aside className="fixed top-16 z-30 hidden h-[calc(100vh-64px)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 md:sticky md:block lg:py-10">
                     <SidebarNav items={sidebarNavItems} />
                   </aside>
                   <div className="pt-4 h-full">{children}</div>
