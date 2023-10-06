@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         url: "https://www.worldcubeassociation.org/oauth/authorize",
         params: {
-          scope: "public",
+          scope: "public email",
         },
       },
       token: {
@@ -57,8 +57,9 @@ export const authOptions: NextAuthOptions = {
           id: profile.me.id,
           name: profile.me.name,
           image: profile.me.avatar.thumb_url,
+          email: profile.me.email,
           role: "user",
-          // TODO: get WCA ID
+          wcaId: profile.me.wca_id,
         };
       },
       clientId: process.env.WCA_CLIENT_ID!,
@@ -84,6 +85,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, user }) {
       session.user.role = user.role;
+      session.user.wcaId = user.wcaId;
       return session;
     },
   },
