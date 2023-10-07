@@ -36,7 +36,7 @@ More details [here](https://next-auth.js.org/configuration/options#environment-v
 
 1. [Create an OAuth application](https://www.worldcubeassociation.org/oauth/applications/new).
 2. Set the Redirect URI to `http://localhost:3000/api/auth/callback/wca` for development, or `https://{YOUR_DOMAIN}/api/auth/callback/wca` for production.
-3. Leave scopes blank and click Submit.
+3. Set the Scopes to `public email` and click Submit.
 4. Update your `.env` file with the credentials shown on the page. "Application ID" is the `WCA_CLIENT_ID`, and "Secret" is the `WCA_CLIENT_SECRET`.
 
 ### Setting up Google OAuth
