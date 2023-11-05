@@ -357,9 +357,9 @@ export default function AddSetForm({ puzzles }: AddSetFormProps) {
         </div>
       </div>
       <p className="font-bold text-lg">Cases ({cases.length})</p>
-      {cases.map((c, index) => {
+      {cases.map((c) => {
         return (
-          <Card key={index}>
+          <Card key={c.id}>
             <CardHeader>
               <CardTitle>
                 <Input
