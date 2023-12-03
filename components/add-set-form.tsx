@@ -378,9 +378,16 @@ export default function AddSetForm({ puzzles }: AddSetFormProps) {
                       ...(options as SVGVisualizerOptions),
                       puzzle: {
                         ...(options as SVGVisualizerOptions).puzzle,
-                        alg: new Alg(c.algorithms[0]?.alg || "")
-                          .invert()
-                          .toString(),
+                        alg: (() => {
+                          // try/catch will catch any unparseable algs
+                          try {
+                            return new Alg(c.algorithms[0]?.alg || "")
+                              .invert()
+                              .toString();
+                          } catch (e) {
+                            return "";
+                          }
+                        })(),
                       },
                     }}
                   />
