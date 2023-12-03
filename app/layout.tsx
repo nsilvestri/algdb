@@ -63,7 +63,7 @@ export default async function RootLayout({
     {
       title: "Algorithm Sets",
       items: sets.map((set) => ({
-        title: set.name,
+        title: `${set.name} - ${set.puzzle.name}`,
         href: `/puzzles/${set.puzzle.slug}/sets/${set.slug}`,
       })),
     },
