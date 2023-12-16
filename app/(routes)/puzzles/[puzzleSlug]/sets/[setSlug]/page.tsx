@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import prisma from "@/prisma/global-prisma-client";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
+import { Algorithm } from "@/components/Algorithm/Algorithm";
 export default async function Page({
   params,
 }: {
@@ -59,9 +60,7 @@ export default async function Page({
                     const isLast = i === c.algorithms.length - 1;
                     return (
                       <>
-                        <div>
-                          <p>{a.moves}</p>
-                        </div>
+                        <Algorithm moves={a.moves} />
                         {!isLast && <Separator />}
                       </>
                     );
