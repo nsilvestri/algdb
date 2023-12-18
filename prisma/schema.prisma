@@ -42,15 +42,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  wcaId         String?
-  role          String    @default("user")
-  accounts      Account[]
-  sessions      Session[]
+  id                String             @id @default(cuid())
+  name              String?
+  email             String?            @unique
+  emailVerified     DateTime?
+  image             String?
+  wcaId             String?
+  role              String             @default("user")
+  accounts          Account[]
+  sessions          Session[]
+  learnedAlgorithms LearnedAlgorithm[]
 }
 
 model VerificationToken {
@@ -104,9 +105,10 @@ model Case {
 }
 
 model Algorithm {
-  id    String @id @default(cuid())
-  moves String
-  cases Case[]
+  id       String             @id @default(cuid())
+  moves    String
+  cases    Case[]
+  learners LearnedAlgorithm[]
 }
 
 model Visualization {
@@ -130,4 +132,15 @@ model Method {
 
   @@index([puzzleId])
   @@index([visualizationId])
+}
+
+model LearnedAlgorithm {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
+  algorithmId String
+
+  @@index([userId])
+  @@index([algorithmId])
 }

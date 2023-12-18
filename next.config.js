@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["algdb.vercel.app", "localhost"]
+    }
+  }
+};
 
 module.exports = nextConfig;
