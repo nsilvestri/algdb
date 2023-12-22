@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { PNG, Type, PNGVisualizerOptions } from "sr-puzzlegen"; // Assuming these are the correct imports
+import { PNG, SVG, Type, PNGVisualizerOptions } from "sr-puzzlegen"; // Assuming these are the correct imports
 
 interface PuzzleProps {
   type: Type;
@@ -19,15 +19,12 @@ const PuzzleGen: React.FC<PuzzleProps> = ({ type, options }) => {
       PNG(puzzleContainerRef.current, type, options);
     }
 
-    // Clean up when the component unmounts
     return () => {
-      if (puzzleContainerRef.current) {
-        puzzleContainerRef.current.innerHTML = "";
-      }
+      puzzleContainerRef.current = null;
     };
-  }, [type, options, puzzleContainerRef.current]);
+  }, [type, options, puzzleContainerRef]);
 
-  return <div id="puzzle" ref={puzzleContainerRef}></div>;
+  return <div ref={puzzleContainerRef} />;
 };
 
 export default PuzzleGen;

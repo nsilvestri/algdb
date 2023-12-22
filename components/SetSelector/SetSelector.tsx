@@ -20,7 +20,7 @@ export async function SetSelector() {
       {sets.map((set) => {
         return (
           <Link
-            key={set.slug}
+            key={set.id}
             href={`/puzzles/${set.puzzle.slug}/sets/${set.slug}`}
           >
             <Card>

@@ -60,7 +60,7 @@ export default async function Page({
                     const isLast = i === c.algorithms.length - 1;
                     return (
                       <>
-                        <Algorithm moves={a.moves} />
+                        <Algorithm moves={a.moves} algorithmId={a.id} />
                         {!isLast && <Separator />}
                       </>
                     );
