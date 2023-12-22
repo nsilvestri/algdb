@@ -6,6 +6,7 @@ import { LearnedButton } from "../LearnedButton/LearnedButton";
 export type AlgorithmProps = {
   moves: string;
   algorithmId: string;
+  learned: boolean;
 };
 
 export function Algorithm({ moves, algorithmId }: AlgorithmProps) {

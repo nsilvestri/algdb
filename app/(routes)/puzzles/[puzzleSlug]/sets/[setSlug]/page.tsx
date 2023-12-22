@@ -6,6 +6,9 @@ import prisma from "@/prisma/global-prisma-client";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
 import { Algorithm } from "@/components/Algorithm/Algorithm";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+
 export default async function Page({
   params,
 }: {
@@ -14,6 +17,7 @@ export default async function Page({
     setSlug: string;
   };
 }) {
+  const session = await getServerSession(authOptions);
   const set = await prisma.set.findFirst({
     where: {
       puzzle: {
@@ -25,7 +29,15 @@ export default async function Page({
       visualization: true,
       cases: {
         include: {
-          algorithms: true,
+          algorithms: {
+            include: {
+              learners: {
+                where: {
+                  id: session?.user?.id,
+                },
+              },
+            },
+          },
         },
       },
     },

@@ -5,23 +5,17 @@ import { Button } from "../ui/button";
 import { markAlgorithmAsLearned, markAlgorithmAsUnlearned } from "./actions";
 
 export type LearnedButtonProps = {
-  initialLearned: boolean;
+  learned: boolean;
   algorithmId: string;
 };
 
-export function LearnedButton({
-  initialLearned,
-  algorithmId,
-}: LearnedButtonProps) {
-  const [learned, setLearned] = useState(initialLearned);
-
+export function LearnedButton({ learned, algorithmId }: LearnedButtonProps) {
   async function onClick() {
     if (learned) {
       await markAlgorithmAsUnlearned();
     } else {
       await markAlgorithmAsLearned(algorithmId);
     }
-    setLearned(!learned);
   }
 
   return (
