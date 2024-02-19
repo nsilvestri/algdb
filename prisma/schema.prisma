@@ -92,21 +92,37 @@ model Set {
 }
 
 model Case {
-  id         String      @id @default(cuid())
-  name       String
-  setup      String
-  puzzle     Puzzle      @relation(fields: [puzzleId], references: [id])
-  puzzleId   String
-  sets       Set[]
-  algorithms Algorithm[]
+  id                String              @id @default(cuid())
+  name              String
+  setup             String
+  puzzle            Puzzle              @relation(fields: [puzzleId], references: [id])
+  puzzleId          String
+  sets              Set[]
+  algorithms        Algorithm[]
+  algorithmsForCase AlgorithmsForCase[] // TODO: rename to "algorithms" when that namespace is available
 
   @@index([puzzleId])
 }
 
 model Algorithm {
-  id    String @id @default(cuid())
-  moves String
-  cases Case[]
+  id                String              @id @default(cuid())
+  moves             String
+  algorithmsForCase AlgorithmsForCase[] // TODO: rename to "cases" when Case.algorithms is available
+  Case              Case?               @relation(fields: [caseId], references: [id])
+  caseId            String?
+
+  @@index([caseId])
+}
+
+model AlgorithmsForCase {
+  id          String    @id @default(cuid())
+  algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
+  algorithmId String
+  case        Case      @relation(fields: [caseId], references: [id])
+  caseId      String
+
+  @@index([algorithmId])
+  @@index([caseId])
 }
 
 model Visualization {
