@@ -24,7 +24,11 @@ export default async function Page({
       visualization: true,
       cases: {
         include: {
-          algorithms: true,
+          algorithmsForCase: {
+            include: {
+              algorithm: true,
+            },
+          },
         },
       },
     },
@@ -55,12 +59,12 @@ export default async function Page({
                 </div>
                 <Separator orientation="vertical" />
                 <div className="flex flex-col gap-y-1 flex-grow">
-                  {c.algorithms.map((a, i) => {
-                    const isLast = i === c.algorithms.length - 1;
+                  {c.algorithmsForCase.map((afc, i) => {
+                    const isLast = i === c.algorithmsForCase.length - 1;
                     return (
                       <>
                         <div>
-                          <p>{a.moves}</p>
+                          <p>{afc.algorithm.moves}</p>
                         </div>
                         {!isLast && <Separator />}
                       </>
