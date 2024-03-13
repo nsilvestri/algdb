@@ -1,6 +1,6 @@
 # AlgDB Next
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It uses [shadcn/ui](https://ui.shadcn.com/) for components, [Planetscale](https://planetscale.com/) for the database, [Prisma](https://www.prisma.io/) as an ORM and database migration tool, and the [Vercel Platform](https://vercel.com/) for deployment.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It uses [shadcn/ui](https://ui.shadcn.com/) for components, PostgreSQL for the database, [Prisma](https://www.prisma.io/) as an ORM and database migration tool, and the [Vercel Platform](https://vercel.com/) for deployment.
 
 ## Getting Started
 
@@ -18,7 +18,9 @@ Create a `.env` file in the root directory, and copy the contents of `env.exampl
 
 ### Prisma Database URL
 
-This project uses Planetscale for its database. You can set up a Planetscale database yourself, or use a different MySQL-compatible database. Set `DATABASE_URL` accordingly.
+This project uses PostgreSQL for its database. Set up an instance of this yourself, and then set `DATABASE_URL` accordingly.
+
+The hosted version of this project uses Supabase's PostgreSQL service as a database host, but does not use any additional features of Supabase.
 
 ### NextAuth
 
