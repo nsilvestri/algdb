@@ -23,6 +23,10 @@ Note: `DIRECT_URL` is only used for compatibility with pgBouncer in production, 
 
 The hosted version of this project uses Supabase's PostgreSQL service as a database host, but does not use any additional features of Supabase.
 
+### Seed Data Source
+
+The database seeding script used in development is set up to copy non-sensitive data on the current public website through the `/api/data-export` endpoint. Set the environment variable `SEED_DATA_SOURCE` to the URL of the website (as of writing, `https://algdb.vercel.app/api/data-export`) and the populated data will be copied to the local database.
+
 ### NextAuth
 
 Set `NEXTAUTH_URL` to the canonical URL of the site. Use `http://localhost:3000` for development.

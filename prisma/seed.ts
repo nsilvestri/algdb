@@ -1,36 +1,67 @@
 import { PrismaClient } from "@prisma/client";
-import { puzzles } from "./seed-data/puzzle";
-import { sets } from "./seed-data/set";
-import { methods } from "./seed-data/method";
-import { algorithms } from "./seed-data/algorithm";
-import { caseAlgorithmLinks } from "./seed-data/algorithms-for-case";
+import { DataExport } from "@/app/api/data-export/route";
 const prisma = new PrismaClient();
 
+/**
+ * Inserts the data from the DataExport object into the database.
+ * @param data
+ */
+async function loadData(data: DataExport) {
+  await prisma.visualization.createMany({
+    data: data.visualizations,
+  });
+
+  await prisma.puzzle.createMany({
+    data: data.puzzles,
+  });
+
+  await prisma.method.createMany({
+    data: data.methods,
+  });
+
+  await prisma.algorithm.createMany({
+    data: data.algorithms,
+  });
+
+  await prisma.case.createMany({
+    data: data.cases,
+  });
+
+  await prisma.algorithmsForCase.createMany({
+    data: data.algorithmsForCase,
+  });
+
+  // Set data cannot be created with createMany due to Prisma limitations
+  await Promise.all(
+    data.sets.map(async (set) => {
+      await prisma.set.create({
+        data: {
+          ...set,
+          cases: {
+            connect: set.cases,
+          },
+          methods: {
+            connect: set.methods,
+          },
+        },
+      });
+    })
+  );
+}
+
+/**
+ * Retrieves data from the endpoint declared in the environment variable SEED_DATA_SOURCE
+ * and returns it as a DataExport object.
+ */
+async function fetchData(): Promise<DataExport> {
+  const response = await fetch(process.env.SEED_DATA_SOURCE as string);
+  const data = await response.json();
+  return data as DataExport;
+}
+
 async function main() {
-  const puzzlePromises = puzzles.map(async (puzzle) => {
-    await prisma.puzzle.create({ data: puzzle });
-  });
-  await Promise.all(puzzlePromises);
-
-  const setPromises = sets.map(async (set) => {
-    await prisma.set.create({ data: set });
-  });
-  await Promise.all(setPromises);
-
-  const methodPromises = methods.map(async (method) => {
-    await prisma.method.create({ data: method });
-  });
-  await Promise.all(methodPromises);
-
-  const algorithmPromises = algorithms.map(async (algorithm) => {
-    await prisma.algorithm.create({ data: algorithm });
-  });
-  await Promise.all(algorithmPromises);
-
-  const caseAlgorithmLinkPromises = caseAlgorithmLinks.map(async (link) => {
-    await prisma.algorithmsForCase.create({ data: link });
-  });
-  await Promise.all(caseAlgorithmLinkPromises);
+  const data = await fetchData();
+  await loadData(data);
 }
 
 main()
