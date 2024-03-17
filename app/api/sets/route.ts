@@ -89,6 +89,7 @@ const Set: z.ZodType<Prisma.SetCreateInput> = z.object({
         z.object({
           name: z.string().min(1).max(255),
           setup: z.string().min(1).max(255),
+          puzzleId: z.string(),
           puzzle: z.object({
             connect: z.optional(
               z.object({
@@ -101,6 +102,7 @@ const Set: z.ZodType<Prisma.SetCreateInput> = z.object({
               .array(
                 z.object({
                   moves: z.string(),
+                  algorithmId: z.string(),
                 })
               )
               .nonempty(),
