@@ -6,8 +6,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 1. Run `npm install` to install dependencies.
 1. Define the environment variables (see [below](#environment-variables)).
-1. Run `npx prisma db push` to push the database schema to your database.
-1. Run `npx prisma db seed` to seed the database with initial data.
+1. Run `npx prisma migrate reset` to create the database schema and seed it with data.
 1. Run `npm run dev` to start the development server.
 1. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -18,7 +17,9 @@ Create a `.env` file in the root directory, and copy the contents of `env.exampl
 
 ### Prisma Database URL
 
-This project uses PostgreSQL for its database. Set up an instance of this yourself, and then set `DATABASE_URL` accordingly.
+This project uses PostgreSQL for its database. Set up an instance of this yourself, and then set `DATABASE_URL` and `DIRECT_URL` accordingly.
+
+Note: `DIRECT_URL` is only used for compatibility with pgBouncer in production, but still must be declared when running locally. It should have the same value as `DATABASE_URL`.
 
 The hosted version of this project uses Supabase's PostgreSQL service as a database host, but does not use any additional features of Supabase.
 
