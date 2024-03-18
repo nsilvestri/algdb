@@ -6,10 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Account {
@@ -29,7 +28,6 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])
 }
 
 model Session {
@@ -38,8 +36,6 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
 }
 
 model User {
@@ -72,8 +68,6 @@ model Puzzle {
   sets            Set[]
   cases           Case[]
   methods         Method[]
-
-  @@index([visualizationId])
 }
 
 model Set {
@@ -87,9 +81,6 @@ model Set {
   cases           Case[]
   methods         Method[]
   methodId        String?
-
-  @@index([puzzleId])
-  @@index([visualizationId])
 }
 
 model Case {
@@ -99,20 +90,13 @@ model Case {
   puzzle            Puzzle              @relation(fields: [puzzleId], references: [id])
   puzzleId          String
   sets              Set[]
-  algorithms        Algorithm[]
   algorithmsForCase AlgorithmsForCase[] // TODO: rename to "algorithms" when that namespace is available
-
-  @@index([puzzleId])
 }
 
 model Algorithm {
   id                String              @id @default(cuid())
   moves             String
   algorithmsForCase AlgorithmsForCase[] // TODO: rename to "cases" when Case.algorithms is available
-  Case              Case?               @relation(fields: [caseId], references: [id])
-  caseId            String?
-
-  @@index([caseId])
 }
 
 model AlgorithmsForCase {
@@ -121,9 +105,6 @@ model AlgorithmsForCase {
   algorithmId String
   case        Case      @relation(fields: [caseId], references: [id])
   caseId      String
-
-  @@index([algorithmId])
-  @@index([caseId])
 }
 
 model Visualization {
@@ -144,7 +125,4 @@ model Method {
   puzzleId        String
   visualization   Visualization @relation(fields: [visualizationId], references: [id])
   visualizationId String
-
-  @@index([puzzleId])
-  @@index([visualizationId])
 }
