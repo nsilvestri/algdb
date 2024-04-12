@@ -80,7 +80,6 @@ model Set {
   visualizationId String
   cases           Case[]
   methods         Method[]
-  methodId        String?
 }
 
 model Case {
