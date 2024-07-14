@@ -39,15 +39,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  wcaId         String?
-  role          String    @default("user")
-  accounts      Account[]
-  sessions      Session[]
+  id                          String                        @id @default(cuid())
+  name                        String?
+  email                       String?                       @unique
+  emailVerified               DateTime?
+  image                       String?
+  wcaId                       String?
+  role                        String                        @default("user")
+  accounts                    Account[]
+  sessions                    Session[]
+  userLearnedAlgorithmForCase UserLearnedAlgorithmForCase[]
 }
 
 model VerificationToken {
@@ -99,11 +100,23 @@ model Algorithm {
 }
 
 model AlgorithmsForCase {
-  id          String    @id @default(cuid())
-  algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
-  algorithmId String
-  case        Case      @relation(fields: [caseId], references: [id])
-  caseId      String
+  id                          String                        @id @default(cuid())
+  algorithm                   Algorithm                     @relation(fields: [algorithmId], references: [id])
+  algorithmId                 String
+  case                        Case                          @relation(fields: [caseId], references: [id])
+  caseId                      String
+  userLearnedAlgorithmForCase UserLearnedAlgorithmForCase[]
+}
+
+model UserLearnedAlgorithmForCase {
+  id                  String            @id @default(cuid())
+  user                User              @relation(fields: [userId], references: [id])
+  userId              String
+  algorithmsForCase   AlgorithmsForCase @relation(fields: [algorithmsForCaseId], references: [id])
+  algorithmsForCaseId String
+  status              String
+
+  @@unique([userId, algorithmsForCaseId])
 }
 
 model Visualization {

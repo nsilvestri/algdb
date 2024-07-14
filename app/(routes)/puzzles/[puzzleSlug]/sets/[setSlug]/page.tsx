@@ -5,6 +5,11 @@ import { Separator } from "@/components/ui/separator";
 import prisma from "@/prisma/global-prisma-client";
 import { PNGVisualizerOptions } from "sr-puzzlegen";
 import { VisualizerType } from "sr-puzzlegen/dist/lib/visualizer/enum";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { AlgorithmRow } from "@/components/AlgorithmRow/AlgorithmRow";
+import { Prisma } from "@prisma/client";
+
 export default async function Page({
   params,
 }: {
@@ -13,6 +18,9 @@ export default async function Page({
     setSlug: string;
   };
 }) {
+  const session = await getServerSession(authOptions);
+  const loggedIn = session?.user !== undefined;
+
   const set = await prisma.set.findFirst({
     where: {
       puzzle: {
@@ -27,6 +35,13 @@ export default async function Page({
           algorithmsForCase: {
             include: {
               algorithm: true,
+              userLearnedAlgorithmForCase: loggedIn
+                ? {
+                    where: {
+                      userId: session.user.id,
+                    },
+                  }
+                : false,
             },
           },
         },
@@ -63,9 +78,17 @@ export default async function Page({
                     const isLast = i === c.algorithmsForCase.length - 1;
                     return (
                       <>
-                        <div>
-                          <p>{afc.algorithm.moves}</p>
-                        </div>
+                        <AlgorithmRow
+                          algorithm={afc.algorithm}
+                          algorithmForCase={afc}
+                          initialStatus={
+                            afc.userLearnedAlgorithmForCase !== undefined
+                              ? afc.userLearnedAlgorithmForCase[0]?.status ||
+                                "Not learned"
+                              : "Not learned"
+                          }
+                          loggedIn={loggedIn}
+                        />
                         {!isLast && <Separator />}
                       </>
                     );
@@ -79,3 +102,5 @@ export default async function Page({
     </div>
   );
 }
+
+async function getSetsForLoggedInUser() {}
